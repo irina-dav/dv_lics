@@ -1,0 +1,47 @@
+﻿@model SessionsListViewModel
+
+<div class="container col-11 pb-5">
+    <h2>Список сессий пользователей в СЭД Docsvision</h2>
+    <h5>Количество занятых лицензий: @Model.LicsCount из @Model.LicsMax, количество пользовательских сессий: @Model.Sessions.Count</h5>
+    <p class="small text-muted">
+        Сессий может быть больше лицензий, т.к. 1 лицензия = уникальное сочетание имени пользователя и имени компьютера.
+        <br />Если сотрудник два раза запустил программу на компьютере, то сессий будет 2, но лицензия занимается 1. Если компьютеры разные &mdash; используется 2 лицензии.
+        <br />Оффлайн-сессия не учитывается.
+    </p>
+    <table id="list" class="table table-striped table-hover table-sm table-bordered small col-10"
+           data-toggle="table"
+           data-sortable="true"
+           data-sort-name="idleTime"
+           data-sort-order="desc">
+        <thead>
+            <tr>
+                <th data-width='30%' data-field="name" data-sortable="true">ФИО</th>
+                <th data-width='15%' data-field="computerName" data-sortable="true">Имя компьютера</th>
+                <th data-width='15%' data-field="logonDate" data-sortable="true">Дата входа</th>
+                <th data-width='15%' data-field="lastDate" data-sortable="true">Дата последней активности</th>
+                <th data-width='15%' data-field="idleTime" data-sortable="true">Время бездействия</th>
+                <th data-width='10%' data-field="offline" data-sortable="true">Оффлайн/Онлайн</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (SessionViewModel sess in Model.Sessions.OrderByDescending(s => s.IdleTime))
+            {
+            <tr>
+                <td>@sess.UserName</td>
+                <td>@sess.ComputerName</td>
+                <td>@sess.LoginTime.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@sess.LastAccessTime.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@($"{sess.IdleTime.Hours:00}:{sess.IdleTime.Minutes:00}:{sess.IdleTime.Seconds:00}")</td>
+                <td>@sess.Offline</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var table = $('#list');
+        table.bootstrapTable()
+    }
+</script>

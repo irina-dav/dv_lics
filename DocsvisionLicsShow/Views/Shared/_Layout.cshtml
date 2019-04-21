@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/all.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-table/bootstrap-table.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>   
+    <script src="~/lib/bootstrap-table/bootstrap-table.min.js"></script>
+
+    @RenderSection("head", false)
+    <title>Docsvision Info :: @ViewBag.Title</title>
+</head>
+
+<body>
+    <div id="main">
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-success">@Html.Raw(@TempData["message"])</div>
+        }
+        @if (TempData["warning"] != null)
+        {
+            <div class="alert alert-danger">@Html.Raw(@TempData["warning"])</div>
+        }
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger" role="alert">@Html.Raw(@TempData["Error"])</div>
+        }
+        
+        @RenderBody()
+    </div>
+</body>
+</html>
