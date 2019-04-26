@@ -29,8 +29,13 @@ namespace DocsvisionLicsShow.Data
 
         public string GetEmployeeDisplayString(string accountName)
         {
+            string displayStr = "";
             var employee = Employees.FirstOrDefaultAsync(em => em.AccountName.ToUpper() == accountName.ToUpper());
-            return $"{employee.Result.LastName} {employee.Result.FirstName} {employee.Result.MiddleName}";
+            if (employee .Result== null)
+                displayStr = accountName;
+            else
+                displayStr = $"{employee.Result.LastName ?? ""} {employee.Result.FirstName ?? ""} {employee.Result.MiddleName ?? ""}";
+            return displayStr;
         }
     }
 }
